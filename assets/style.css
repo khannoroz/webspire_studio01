@@ -131,7 +131,7 @@ p{margin:0;}
 
 /* ---------- Navbar ---------- */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
+  position:fixed;top:0;left:0;right:0;z-index:1000;
   padding:22px 0;
   transition:padding .35s var(--ease),background .35s ease,border-color .35s ease;
   border-bottom:1px solid transparent;
