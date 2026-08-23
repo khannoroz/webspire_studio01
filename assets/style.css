@@ -30,7 +30,7 @@
   --font-body:'Plus Jakarta Sans', sans-serif;
   --font-mono:'Space Mono', monospace;
 
-  --container:1240px;
+  --container:min(1760px, 94vw);
   --ease:cubic-bezier(.16,.84,.44,1);
   --ease-spring:cubic-bezier(.34,1.56,.64,1);
 }
@@ -54,6 +54,8 @@ body{
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
   position:relative;
+  word-wrap:break-word;
+  overflow-wrap:break-word;
 }
 
 img,svg,video{max-width:100%;}
@@ -141,9 +143,19 @@ p{margin:0;}
 }
 .nav.is-scrolled{
   padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+/* Backdrop blur is applied via a pseudo-element rather than directly on .nav,
+   because a backdrop-filter on .nav would make .nav a new containing block
+   for its fixed-position descendants (e.g. .mobile-menu), which broke the
+   mobile menu's full-screen positioning once the page was scrolled. */
+.nav.is-scrolled::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
   background:rgba(10,10,11,0.72);
   backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);
-  border-bottom:1px solid var(--line);
 }
 .nav .container{display:flex;align-items:center;justify-content:space-between;gap:24px;}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-.01em;}
@@ -465,8 +477,8 @@ footer{background:var(--void);border-top:1px solid var(--line);padding:80px 0 30
 .contact-info-card{padding:40px;margin-bottom:22px;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));}
 .contact-info-card:hover{border-color:var(--glass-border-hover);transform:translateX(4px);}
 .contact-info-card h4{font-family:var(--font-mono);font-size:12.5px;color:var(--mist);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;}
-.contact-info-card a,.contact-info-card p{font-size:17px;}
-.contact-info-card a{transition:color .25s ease;}
+.contact-info-card a,.contact-info-card p{font-size:17px;overflow-wrap:anywhere;word-break:break-word;}
+.contact-info-card a{transition:color .25s ease;display:inline-block;max-width:100%;}
 .contact-info-card a:hover{color:var(--lime);}
 .contact-info-card .big{font-family:var(--font-display);font-size:22px;}
 .form-field{margin-bottom:26px;}
@@ -558,4 +570,6 @@ footer{background:var(--void);border-top:1px solid var(--line);padding:80px 0 30
   .hero-stats{gap:20px 26px;}
   .eyebrow{font-size:11px;}
   .plan-price{font-size:36px;}
+  .contact-info-card{padding:28px 22px;}
+  .contact-info-card .big{font-size:18px;}
 }
