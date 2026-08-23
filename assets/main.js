@@ -130,22 +130,24 @@ if (track) {
   prev && prev.addEventListener('click', () => track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
 }
 
-// ============ Portfolio filter ============
-const filterBtns = document.querySelectorAll('.filter-btn');
-if (filterBtns.length) {
-  const items = document.querySelectorAll('.port-item');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cat = btn.dataset.filter;
-      items.forEach(item => {
-        const show = cat === 'all' || item.dataset.category === cat;
-        item.style.display = show ? '' : 'none';
-      });
-    });
-  });
-}
+// ============ Project card image sliders ============
+document.querySelectorAll('.project-slider').forEach(slider => {
+  const slides = Array.from(slider.querySelectorAll('.slider-slides img'));
+  const dots = Array.from(slider.querySelectorAll('.slider-dots .dot'));
+  const prevBtn = slider.querySelector('[data-slider-prev]');
+  const nextBtn = slider.querySelector('[data-slider-next]');
+  if (!slides.length) return;
+  let current = 0;
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((img, i) => img.classList.toggle('active', i === current));
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+  prevBtn && prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn && nextBtn.addEventListener('click', () => goTo(current + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+  goTo(0);
+});
 
 // ============ Contact form ============
 const contactForm = document.getElementById('contact-form');
